@@ -23,23 +23,24 @@ public:
         return buildTreeUtil(inorder, postorder, 0, n-1, 0, n-1);
     }
 private:
-    TreeNode *buildTreeUtil(vector<int> &inorder, vector<int> &postorder, int inS, int inE, int postS, int postE){
-        if(inE - inS < 0) return nullptr;
-        int linS, linE, lpostS, lpostE, rootPos = inS;
-        int rinS, rinE, rpostS, rpostE;
-        while(rootPos <= inE and inorder[rootPos] != postorder[postE])
+    TreeNode *buildTreeUtil(vector<int> &inorder, vector<int> &postorder, int inorderStart, int inorderEnd, int postorderStart, int postEnd){
+        if(inorderEnd - inorderStart < 0) return nullptr;
+        int leftInorderStartIndex, leftInorderEndIndex, leftPostorderStartIndex, leftPostorderEndIndex, rootPos = inorderStart;
+        int rightInorderStartIndex, rightInorderEndIndex, rightPostorderStartIndex, rightPostorderEndIndex;
+        // Find the root position
+        while(rootPos <= inorderEnd and inorder[rootPos] != postorder[postEnd])
             rootPos++;
-        TreeNode *root = new TreeNode(postorder[postE]);
-        linS = inS;
-        linE = rootPos - 1;
-        lpostS = postS;
-        lpostE = lpostS + (linE - linS);
-        rinS = rootPos + 1;
-        rinE = inE;
-        rpostS = lpostE + 1;
-        rpostE = postE - 1;
-        root->left = buildTreeUtil(inorder, postorder, linS, linE, lpostS, lpostE);
-        root->right = buildTreeUtil(inorder, postorder, rinS, rinE, rpostS, rpostE);
+        TreeNode *root = new TreeNode(postorder[postEnd]);
+        leftInorderStartIndex = inorderStart;
+        leftInorderEndIndex = rootPos - 1;
+        leftPostorderStartIndex = postorderStart;
+        leftPostorderEndIndex = leftPostorderStartIndex + (leftInorderEndIndex - leftInorderStartIndex);
+        rightInorderStartIndex = rootPos + 1;
+        rightInorderEndIndex = inorderEnd;
+        rightPostorderStartIndex = leftPostorderEndIndex + 1;
+        rightPostorderEndIndex = postEnd - 1;
+        root->left = buildTreeUtil(inorder, postorder, leftInorderStartIndex, leftInorderEndIndex, leftPostorderStartIndex, leftPostorderEndIndex);
+        root->right = buildTreeUtil(inorder, postorder, rightInorderStartIndex, rightInorderEndIndex, rightPostorderStartIndex, rightPostorderEndIndex);
         return root;
     }
 };
