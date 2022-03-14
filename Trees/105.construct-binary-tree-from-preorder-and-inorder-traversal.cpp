@@ -28,7 +28,7 @@ private:
         if(preE - preS < 0) return nullptr;
         int leftPreorderStartIndex, leftPreorderEndIndex, leftInorderStartIndex, leftInorderEndIndex, rootPos;
         int rightPreorderStartIndex, rightPreorderEndIndex, rightInorderStartIndex, rightInorderEndIndex;
-        for(rootPos = inS; rootPos < inE; rootPos++){
+        for(rootPos = inS; rootPos <= inE; rootPos++){
             if(inorder[rootPos] == preorder[preS])
                 break;
         }
