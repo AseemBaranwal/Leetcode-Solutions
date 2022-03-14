@@ -25,12 +25,10 @@ public:
 private:
     TreeNode *buildTreeUtil(vector<int> &inorder, vector<int> &postorder, int inS, int inE, int postS, int postE){
         if(inE - inS < 0) return nullptr;
-        int linS, linE, lpostS, lpostE, rootPos;
+        int linS, linE, lpostS, lpostE, rootPos = inS;
         int rinS, rinE, rpostS, rpostE;
-        for(int rootPos = inS; rootPos <= inE; rootPos++){
-            if(inorder[rootPos] == postorder[postE])
-                break;
-        }
+        while(rootPos <= inE and inorder[rootPos] != postorder[postE])
+            rootPos++;
         TreeNode *root = new TreeNode(postorder[postE]);
         linS = inS;
         linE = rootPos - 1;
