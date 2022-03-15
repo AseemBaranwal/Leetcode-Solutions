@@ -26,25 +26,18 @@ public:
 class Solution {
 public:
     Node* connect(Node* root) {
-        // Space Complexity : O(1), Time Complexity : O(N)
+        // Solution based on the condition that given tree is a perfect trees
+        // ie each node has children in pairs
+        // Time Complexity : O(N)
+        // Space Complexity : O(W) {Width of Tree = N/2}
         if(!root) return NULL;
-        Node *head = root; // head refers to the Parent Node
-        while(head){
-            Node *childPointer = new Node(-1), *p = childPointer;
-            while(head){
-                if(head->left){
-                    p->next = head->left;
-                    p = p->next;
-                }
-                if(head->right){
-                    p->next = head->right;
-                    p = p->next;
-                }
-                head = head->next;
-            }
-            // Go to next Level
-            // After every iteration, the parentNode level is completely linked with next Pointers
-            head = childPointer->next;
+        Node *left = root->left, *right = root->right, *next = root->next;
+        if(left){
+            left->next = right;
+            if(next)
+                right->next = next->left;
+            connect(left);
+            connect(right);
         }
         return root;
     }
