@@ -40,7 +40,8 @@ private:
         BottomSum *leftAnswer = maxPathSumUtil(root->left);
         BottomSum *rightAnswer = maxPathSumUtil(root->right);
         int subTreesSum = max(leftAnswer->continuousSum, rightAnswer->continuousSum);
-        int continuousSum = root->val, maxSum = INT_MIN;
+        int continuousSum = root->val;
+        int maxSum = max(leftAnswer->maxSum, rightAnswer->maxSum);
         continuousSum += subTreesSum > 0 ? subTreesSum : 0;
         int acrossSum = leftAnswer->continuousSum + rightAnswer->continuousSum + root->val;
         maxSum = max(maxSum, max(continuousSum, acrossSum));
