@@ -8,7 +8,7 @@
 class Solution {
 public:
     int search(vector<int>& nums, int target) {
-        // Time Complexity : O(N)
+        // Time Complexity : O(log N)
         return binarySearch(nums, target, 0, nums.size()-1);
     }
 private:
