@@ -18,17 +18,15 @@
 class Solution {
 public:
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        // Time Complexity: O(N) using DFS
+        // Time Complexity: O(H(N)) since the given Tree is a BST
+        // Taking advantage of the sorted order Property
+        // Space Complexity: O(H(N))
         if(!root) return NULL;
-        TreeNode *leftAnswer = lowestCommonAncestor(root->left, p, q);
-        TreeNode *rightAnswer = lowestCommonAncestor(root->right, p, q);
-        if(leftAnswer and rightAnswer or root->val == p->val or root->val == q->val)
-            return root;
-        if(leftAnswer)
-            return leftAnswer;
-        if(rightAnswer)
-            return rightAnswer;
-        return NULL;
+        if(root->val < p->val and root->val < q->val)
+            return lowestCommonAncestor(root->right, p, q);
+        if(root->val > p->val and root->val > q->val)
+            return lowestCommonAncestor(root->left, p, q);
+        return root;
     }
 };
 // @lc code=end
